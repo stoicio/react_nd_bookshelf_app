@@ -7,9 +7,15 @@ class Book extends Component {
     bookProps: PropTypes.object.isRequired
   };
 
+  handleShelfChange = (event) => {
+    this.props.onShelfUpdate(this.props.bookProps, event.target.value);
+  }
+
   render() {
+
     const {bookProps} = this.props;
     const {imageLinks, title, authors} = bookProps;
+
     return (
       <div className="book">
         <div className="book-top">
@@ -22,7 +28,7 @@ class Book extends Component {
           />
 
           <div className="book-shelf-changer">
-            <select>
+            <select value={bookProps.shelf} onChange={this.handleShelfChange}>
               <option value="none" disabled>Move to...</option>
               <option value="currentlyReading">Currently Reading</option>
               <option value="wantToRead">Want to Read</option>
