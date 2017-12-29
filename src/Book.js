@@ -16,6 +16,12 @@ class Book extends Component {
     const {bookProps} = this.props;
     const {imageLinks, title, authors} = bookProps;
 
+    let shelfName = bookProps.shelf;
+
+    if (!shelfName) {
+      shelfName = 'none';
+    }
+
     return (
       <div className="book">
         <div className="book-top">
@@ -28,8 +34,8 @@ class Book extends Component {
           />
 
           <div className="book-shelf-changer">
-            <select value={bookProps.shelf} onChange={this.handleShelfChange}>
-              <option value="none" disabled>Move to...</option>
+            <select value={shelfName} onChange={this.handleShelfChange}>
+              <option value="novalue" disabled>Move to...</option>
               <option value="currentlyReading">Currently Reading</option>
               <option value="wantToRead">Want to Read</option>
               <option value="read">Read</option>
@@ -39,9 +45,10 @@ class Book extends Component {
         </div>
         <div className="book-title">{title}</div>
         {
-          authors.map( author => (
+          authors &&  (authors.map( author => (
             <div key={author} className="book-authors">{author}</div>
-          ))
+          )))
+
         }
     </div>
   )}
