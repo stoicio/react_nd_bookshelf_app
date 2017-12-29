@@ -1,5 +1,6 @@
 import React from 'react';
 import {Route, Link} from 'react-router-dom';
+import _ from 'lodash';
 import * as BooksAPI from './BooksAPI';
 import './App.css';
 import BookShelf from './BookShelf';
@@ -63,6 +64,7 @@ class BooksApp extends React.Component {
   render() {
 
     const {currentlyReadingBooks, wantToReadBooks, readBooks} = this.state;
+    const allBooks = _.concat(currentlyReadingBooks, wantToReadBooks, readBooks);
 
     return (
       <div className="app">
@@ -82,12 +84,10 @@ class BooksApp extends React.Component {
           </div>
         )}/>
 
-        <Route path='/search' render={({history}) => (
+        <Route path='/search' render={() => (
           <SearchBooks
-            onBookUpdate={(book, shelf) => {
-              this.onBookUpdate(book, shelf)
-              history.push('/')
-          }}/>
+            booksOnShelves={allBooks}
+            onBookUpdate={this.onBookUpdate}/>
         )}/>
 
       </div>
