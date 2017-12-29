@@ -51,11 +51,13 @@ class SearchBooks extends Component {
    * a request to the API to search for books using the query term.
    */
   updateQuery = (queryText) => {
-    this.setState({
-      query: queryText.trim()
-    }, ()=> {
-      if (queryText.trim()) {
+    queryText = queryText.trim();
+
+    this.setState({query: queryText}, ()=> {
+      if (queryText) {
         this.searchQuery(queryText.trim());
+      } else {
+        this.setState({books: []});
       }
     });
   }
